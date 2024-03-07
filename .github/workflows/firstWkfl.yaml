@@ -1,6 +1,8 @@
-name: First Workflow
-on: [push]
 
+name: First Workflow
+
+
+on: [push]
 jobs:
     run-shell-commands:
         runs-on: ubuntu-latest
@@ -15,6 +17,12 @@ jobs:
 
             - name: Install pnpm
               run: npm install -g pnpm
+
+            - name: Echo Region
+              uses: ./.github/check-parameters
+              with:
+                environment-name: 'dev'
+               
 
     deploy_lambda:
         name: Deploy Diagno Lambda
