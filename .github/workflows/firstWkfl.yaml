@@ -19,7 +19,7 @@ jobs:
               run: npm install -g pnpm
 
             - name: Echo Region
-              uses: ./.github/check-parameters
+              uses: ./.github/workflows/check-parameters
               with:
                 environment-name: 'dev'
                
