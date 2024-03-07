@@ -6,7 +6,7 @@ jobs:
         runs-on: ubuntu-latest
         steps: 
             - name: Echo a String
-              run: echo "Hello Lambda World!!!"
+              run: echo "Hello Lambda World"
 
             - name: Use Node.js 16.14
               uses: actions/setup-node@v2
