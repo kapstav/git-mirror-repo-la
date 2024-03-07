@@ -1,0 +1,42 @@
+name: First Workflow
+on: [push]
+
+jobs:
+    run-shell-commands:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Echo a String
+              run: echo "Hello Lambda World!"
+
+            - name: Use Node.js 16.14
+              uses: actions/setup-node@v2
+              with:
+                node-version: '16.14'
+
+            - name: Install pnpm
+              run: npm install -g pnpm
+
+    deploy_lambda:
+        name: Deploy Diagno Lambda
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v2
+          with:
+           aws-access-key-id: AKIAZICKAMD765PAQITE
+           aws-secret-access-key: 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
+           aws-region: us-east-1
+
+        - name: Deploy Lambda Function
+          run: |
+           aws lambda create-function \
+            --function-name DiagnoLambda \
+            --runtime python3.8 \
+            --handler lambda_function.lambda_handler \
+            --role arn:aws:iam::635810373887:role/service-role/DiagnoLambda-role-l1f4q34p \
+            --zip-file fileb://DiagnoLambda-340c5ea7-dea4-4710-989d-cbb4ba13df8e.zip
+
