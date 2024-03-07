@@ -1,0 +1,19 @@
+name: Second Workflow
+on: [push]
+inputs:
+    environment-name: # id of input
+      description: 'Environment to check for parameters'
+      required: true
+jobs:
+    Check-AWS-Parameters:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Use Node.js
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18    
+
+            - id:  installDependencies
+              run: |
+                        sudo npm install -g ts-nod
+                        shell: bash 
