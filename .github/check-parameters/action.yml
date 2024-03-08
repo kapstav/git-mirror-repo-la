@@ -1,5 +1,5 @@
 # shellcheck disable=SC2086
-name: Check AWS Parameters.
+name: Check AWS Parameters
 description: Checks required aws parameters exist
 inputs:
   environment-name: # id of input
