@@ -1,19 +1,36 @@
-name: Second Workflow
-on: [push]
+# shellcheck disable=SC2086
+name: Check AWS Parameters
+description: Checks required aws parameters exist
 inputs:
-    environment-name: # id of input
-      description: 'Environment to check for parameters'
-      required: true
-jobs:
-    Check-AWS-Parameters:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Use Node.js
-              uses: actions/setup-node@v3
-              with:
-                node-version: 18    
+  environment-name: # id of input
+    description: 'Environment to check for parameters'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-            - id:  installDependencies
-              run: |
-                        sudo npm install -g ts-nod
-                        shell: bash 
+    - id: installDependencies
+      run: |
+        sudo npm install -g ts-node
+      shell: bash
+    - id: checkForParametersInStage
+      run: |
+        if [ ${{inputs.environment-name}} == 'dev' ] || [ ${{inputs.environment-name}} == 'stg' ] || [ ${{inputs.environment-name}} == 'prd' ] || [ ${{inputs.environment-name}} == 'tst' ]
+        then
+          pnpm check-aws-params --stage ${{inputs.environment-name}} --command check --throwError true
+        else
+          pnpm check-aws-params --stage default --command check --throwError true
+        fi
+      shell: bash
+    - id: checkForParametersInTstIfDEV
+      run: |
+        if [ ${{inputs.environment-name}} == 'dev' ]
+        then
+          pnpm check-aws-params --stage tst --command check --throwError true
+        fi
+      shell: bash

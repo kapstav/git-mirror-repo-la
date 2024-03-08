@@ -18,8 +18,11 @@ jobs:
             - name: Install pnpm
               run: npm install -g pnpm
 
+            - name: Checkout code
+              uses: actions/checkout@v2
+
             - name: Echo Region
-              uses: ./.github/workflows/check-parameters
+              uses: ./.github/check-parameters
               with:
                 environment-name: 'dev'
                
