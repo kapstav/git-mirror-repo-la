@@ -3,7 +3,7 @@ name: Check AWS Parameters
 description: Checks required aws parameters exist
 inputs:
   environment-name: # id of input
-    description: 'Environment to check for parameters'
+    description: 'Environment to check for parameters!'
     required: true
 runs:
   using: 'composite'
